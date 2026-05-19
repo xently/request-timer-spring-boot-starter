@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>request-timer-spring-boot-starter-webmvc</artifactId>
+            <artifactId>request-timer-spring-boot-starter</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

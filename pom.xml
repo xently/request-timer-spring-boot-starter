@@ -14,7 +14,7 @@
     <version>4.3.0</version>
     <name>request-timer-spring-boot-parent</name>
     <description>Spring Boot autoconfiguration starters that masks sensitive data</description>
-    <url>https://github.com/xently/request-timer-spring-boot-starter-webmvc</url>
+    <url>https://github.com/xently/request-timer-spring-boot-starter</url>
 
     <licenses>
         <license>
@@ -34,10 +34,10 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/xently/request-timer-spring-boot-starter-webmvc.git</connection>
-        <developerConnection>scm:git:ssh://github.com:xently/request-timer-spring-boot-starter-webmvc.git
+        <connection>scm:git:git://github.com/xently/request-timer-spring-boot-starter.git</connection>
+        <developerConnection>scm:git:ssh://github.com:xently/request-timer-spring-boot-starter.git
         </developerConnection>
-        <url>https://github.com/xently/request-timer-spring-boot-starter-webmvc/tree/main</url>
+        <url>https://github.com/xently/request-timer-spring-boot-starter/tree/main</url>
     </scm>
 
     <packaging>pom</packaging>
@@ -52,7 +52,7 @@
     <modules>
         <module>demo-webmvc</module>
         <module>demo-webflux</module>
-        <module>request-timer-spring-boot-starter-webmvc</module>
+        <module>request-timer-spring-boot-starter</module>
         <module>report-aggregate</module>
     </modules>
 

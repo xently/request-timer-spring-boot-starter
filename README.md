@@ -1,8 +1,8 @@
 # P11 Masking Spring Boot Starter + Books API Demo
 
-![Maven Central Version](https://img.shields.io/maven-central/v/ke.co.xently/request-timer-spring-boot-starter-webmvc)
-[![Java CI with Maven](https://github.com/xently/request-timer-spring-boot-starter-webmvc/actions/workflows/maven.yml/badge.svg)](https://github.com/xently/request-timer-spring-boot-starter-webmvc/actions/workflows/maven.yml)
-[![Maven Central Publish](https://github.com/xently/request-timer-spring-boot-starter-webmvc/actions/workflows/maven-publish.yml/badge.svg)](https://github.com/xently/request-timer-spring-boot-starter-webmvc/actions/workflows/maven-publish.yml)
+![Maven Central Version](https://img.shields.io/maven-central/v/ke.co.xently/request-timer-spring-boot-starter)
+[![Java CI with Maven](https://github.com/xently/request-timer-spring-boot-starter/actions/workflows/maven.yml/badge.svg)](https://github.com/xently/request-timer-spring-boot-starter/actions/workflows/maven.yml)
+[![Maven Central Publish](https://github.com/xently/request-timer-spring-boot-starter/actions/workflows/maven-publish.yml/badge.svg)](https://github.com/xently/request-timer-spring-boot-starter/actions/workflows/maven-publish.yml)
 
 A spring boot starter and demo showing sensitive data masking in logs/JSON.
 
@@ -13,7 +13,7 @@ A spring boot starter and demo showing sensitive data masking in logs/JSON.
 
 ## Modules
 
-- `request-timer-spring-boot-starter-webmvc`: Log masking plus an opt-in Jackson module for JSON field masking.
+- `request-timer-spring-boot-starter`: Log masking plus an opt-in Jackson module for JSON field masking.
 - `books-api-demo`: Minimal CRUD API demonstrating the starter.
 
 ## Quick start
