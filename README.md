@@ -1,99 +1,61 @@
-# P11 Masking Spring Boot Starter + Books API Demo
+# Request Timer Spring Boot Starter
 
 ![Maven Central Version](https://img.shields.io/maven-central/v/ke.co.xently/request-timer-spring-boot-starter)
 [![Java CI with Maven](https://github.com/xently/request-timer-spring-boot-starter/actions/workflows/maven.yml/badge.svg)](https://github.com/xently/request-timer-spring-boot-starter/actions/workflows/maven.yml)
 [![Maven Central Publish](https://github.com/xently/request-timer-spring-boot-starter/actions/workflows/maven-publish.yml/badge.svg)](https://github.com/xently/request-timer-spring-boot-starter/actions/workflows/maven-publish.yml)
 
-A spring boot starter and demo showing sensitive data masking in logs/JSON.
+A Spring Boot starter that adds an elapsed time header to HTTP responses. It automatically calculates the time taken from the moment the request is received until the response is about to be committed.
 
-- Spring Boot: 4.x (Jackson 3 `tools.jackson.*`)
-- Java: 21 (LTS)
-- Tests: JUnit 5 with Hamcrest
-- Integration: Testcontainers (Oracle Free) + Rest-Assured
+- **Spring Boot**: 4.x
+- **Java**: 21 (LTS)
+- **Web Support**: WebMvc (Servlet) & WebFlux (Reactive)
+
+## Features
+
+- **Automatic Timing**: Capture request duration without any code changes.
+- **Dual Support**: Works seamlessly with both Spring WebMvc and Spring WebFlux.
+- **Customizable**: Change the header name and filter order via simple properties.
+- **High Precedence**: By default, it runs at the highest precedence to capture the full request lifecycle.
 
 ## Modules
 
-- `request-timer-spring-boot-starter`: Log masking plus an opt-in Jackson module for JSON field masking.
-- `books-api-demo`: Minimal CRUD API demonstrating the starter.
+- `request-timer-spring-boot-starter`: The autoconfiguration starter providing the request timing filters.
+- `demo-webmvc`: Demo application using Spring WebMvc and H2.
+- `demo-webflux`: Demo application using Spring WebFlux and H2.
 
-## Quick start
+## Quick Start
 
-Requirements:
+### Requirements
 - Java 21
 - Maven 3.9+
-- Docker (for Testcontainers)
 
-Run all tests (includes Testcontainers-based API tests):
-
+### Run all tests
 ```bash
-mvn -q -DskipITs=false test
+./mvnw test
 ```
 
-Run the demo API using Testcontainers (Oracle Free):
-
+### Run the Demo Applications
+To run the WebMvc demo:
 ```bash
-mvn -pl books-api-demo -am spring-boot:test-run -DskipTests
+./mvnw -pl demo-webmvc spring-boot:run
 ```
 
-The APIs can be tested through - http://localhost:8080/swagger-ui.html
+To run the WebFlux demo:
+```bash
+./mvnw -pl demo-webflux spring-boot:run
+```
 
-## Config (demo)
+The APIs provide a simple book management service:
+- `GET /api/v1/books` - Retrieve all books (includes `X-ElapsedTime` header in response).
+
+## Configuration
+
+The starter can be configured using the `request-timer` prefix in your `application.yml` or `application.properties`.
 
 ```yaml
-p11:
-  masking:
-    enabled: true
-    mask-style: PARTIAL  # FULL | PARTIAL | LAST4
-    mask-character: "*"
-    json:
-      enabled: true # optional, default false
-    fields:
-      - email
-      - phoneNumber
+request-timer:
+  # Name of the response header. Default is X-ElapsedTime.
+  header-name: X-ElapsedTime
+  # Order of the filter/WebFilter. Default is Ordered.HIGHEST_PRECEDENCE.
+  order: -2147483648
 ```
-
-## Log masking (no code changes)
-
-The starter installs a Logback `%msg` converter that masks sensitive values in log output.
-It works for structured messages (e.g., `email=...`, JSON snippets, Lombok `toString`) and
-common patterns like emails, phone numbers, and card numbers. Default field names are used
-if `p11.masking.fields` is not provided, and any configured fields override the defaults.
-
-Default fields:
-`password`, `passcode`, `secret`, `token`, `accessToken`, `refreshToken`, `ssn`,
-`creditCard`, `cardNumber`, `email`, `phone`, `phoneNumber`, `accountNumber`, `pin`.
-
-## JSON masking (opt-in)
-
-JSON serialization masking is disabled by default. Enable it only when you want
-API responses or other non-log JSON to be masked.
-
-```yaml
-p11:
-  masking:
-    json:
-      enabled: true
-```
-
-## Annotation-based masking
-
-Use `@Mask` to force masking on a specific field even if it is not listed in `p11.masking.fields`.
-Annotation settings override the global properties.
-
-```java
-import co.ke.xently.request.timer.Mask;
-import co.ke.xently.request.timer.P11MaskingProperties;
-
-public record UserDto(
-        String name,
-        @Mask String ssn,
-        @Mask(style = P11MaskingProperties.MaskingStyle.LAST4, maskCharacter = "#") String cardNumber
-) {}
-```
-
-## Highlights
-
-- Testcontainers: Oracle FreeDB container wired via `@ServiceConnection` for repeatable integration tests.
-- Spring Boot 4 + Jackson 3: Optional contextual `String` serializer applies masking to configured or annotated fields.
-- Logback: `%msg` converter masks sensitive values in log output without manual `ObjectMapper` calls.
-- Java 21: Records for DTOs and modern toolchain.

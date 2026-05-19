@@ -13,7 +13,7 @@
     <artifactId>request-timer-spring-boot-parent</artifactId>
     <version>1.0.0</version>
     <name>request-timer-spring-boot-parent</name>
-    <description>Spring Boot autoconfiguration starters that masks sensitive data</description>
+    <description>Spring Boot autoconfiguration starter that adds request timing header</description>
     <url>https://github.com/xently/request-timer-spring-boot-starter</url>
 
     <licenses>
