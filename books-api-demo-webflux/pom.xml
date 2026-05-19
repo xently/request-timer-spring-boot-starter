@@ -8,7 +8,7 @@
         <version>4.3.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>books-api-demo</artifactId>
+    <artifactId>books-api-demo-webflux</artifactId>
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
@@ -24,7 +24,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webmvc</artifactId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>

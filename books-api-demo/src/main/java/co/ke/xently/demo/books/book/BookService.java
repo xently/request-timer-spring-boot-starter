@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Random;
 
 @Service
 @Slf4j
@@ -18,10 +17,6 @@ public class BookService {
     }
 
     public List<BookDto> getAllBooks() {
-        try {
-            Thread.sleep(new Random().nextLong(100, 5000));
-        } catch (InterruptedException ignored) {
-        }
         return bookRepository.findAll()
                 .stream()
                 .map(BookService::getBookDto)

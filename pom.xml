@@ -51,6 +51,7 @@
 
     <modules>
         <module>books-api-demo</module>
+        <module>books-api-demo-webflux</module>
         <module>request-timer-spring-boot-starter-webmvc</module>
         <module>report-aggregate</module>
     </modules>

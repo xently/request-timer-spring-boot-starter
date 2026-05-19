@@ -1,4 +1,4 @@
-package co.ke.xently.demo.books;
+package co.ke.xently.demo.books.book;
 
 import io.restassured.RestAssured;
 import io.restassured.config.EncoderConfig;
@@ -7,14 +7,17 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.system.OutputCaptureExtension;
 import org.springframework.boot.test.web.server.LocalServerPort;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.notNullValue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class OpenApiVerificationTest {
+@ExtendWith(OutputCaptureExtension.class)
+class BookControllerAPITest {
 
     @LocalServerPort
     int port;
@@ -30,13 +33,13 @@ class OpenApiVerificationTest {
     }
 
     @Test
-    void shouldReturnOpenApiDocumentation() {
+    void shouldReturnAllBooks() {
         given()
-                .accept(ContentType.JSON)
                 .when()
-                .get("/v3/api-docs")
+                .get("/api/v1/books")
                 .then()
                 .statusCode(200)
-                .body(containsString("/api/v1/books"));
+                .header("X-Elapsed-Time", notNullValue())
+                .body("$.size()", org.hamcrest.Matchers.is(0));
     }
 }

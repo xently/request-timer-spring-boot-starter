@@ -27,6 +27,11 @@
             <artifactId>books-api-demo</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>books-api-demo-webflux</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

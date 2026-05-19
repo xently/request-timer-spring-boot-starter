@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Application (webflux)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="books-api-demo-webflux" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="co.ke.xently.demo.books.Application" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
