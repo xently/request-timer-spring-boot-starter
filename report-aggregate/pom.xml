@@ -24,12 +24,12 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>books-api-demo</artifactId>
+            <artifactId>demo-webmvc</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>books-api-demo-webflux</artifactId>
+            <artifactId>demo-webflux</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
