@@ -1,5 +1,6 @@
 package co.ke.xently.request.timer;
 
+import co.ke.xently.request.timer.webflux.RequestTimerWebFilter;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;
 import org.springframework.boot.test.context.runner.ReactiveWebApplicationContextRunner;

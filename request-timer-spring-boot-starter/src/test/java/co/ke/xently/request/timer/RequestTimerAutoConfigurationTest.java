@@ -1,5 +1,6 @@
 package co.ke.xently.request.timer;
 
+import co.ke.xently.request.timer.webmvc.RequestTimerFilter;
 import jakarta.servlet.FilterChain;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.autoconfigure.AutoConfigurations;

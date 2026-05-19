@@ -1,5 +1,6 @@
-package co.ke.xently.request.timer;
+package co.ke.xently.request.timer.webmvc;
 
+import co.ke.xently.request.timer.RequestTimerProperties;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletOutputStream;
