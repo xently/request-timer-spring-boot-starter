@@ -19,7 +19,6 @@ public final class DefaultHeaderValueProvider implements HeaderValueProvider {
     @Override
     public String getHeaderValue(long startTime) {
         var date = new Date(System.currentTimeMillis());
-//        return String.valueOf(System.currentTimeMillis() - startTime);
         return dateFormat.format(date);
     }
 }
