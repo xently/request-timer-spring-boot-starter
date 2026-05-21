@@ -21,7 +21,9 @@ public class RequestTimerWebFilter implements WebFilter, Ordered {
         var startTime = System.currentTimeMillis();
         exchange.getResponse().beforeCommit(() -> {
             var elapsedTime = System.currentTimeMillis() - startTime;
-            exchange.getResponse().getHeaders().add(properties.getHeaderName(), String.valueOf(elapsedTime));
+            exchange.getResponse()
+                    .getHeaders()
+                    .add(properties.getHeaderName(), String.valueOf(elapsedTime));
             return Mono.empty();
         });
         return chain.filter(exchange);
