@@ -1,6 +1,7 @@
 package co.ke.xently.request.timer.webmvc;
 
 import co.ke.xently.request.timer.RequestTimerProperties;
+import co.ke.xently.request.timer.utils.HeaderValueProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletOutputStream;
@@ -15,9 +16,11 @@ import java.io.PrintWriter;
 
 public class RequestTimerFilter extends OncePerRequestFilter {
     private final RequestTimerProperties properties;
+    private final HeaderValueProvider headerValueProvider;
 
-    public RequestTimerFilter(RequestTimerProperties properties) {
+    public RequestTimerFilter(RequestTimerProperties properties, HeaderValueProvider headerValueProvider) {
         this.properties = properties;
+        this.headerValueProvider = headerValueProvider;
     }
 
     @Override
@@ -27,7 +30,12 @@ public class RequestTimerFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
         var startTime = System.currentTimeMillis();
-        var wrappedResponse = new TimerResponseWrapper(response, startTime, properties.getHeaderName());
+        var wrappedResponse = new TimerResponseWrapper(
+                response,
+                startTime,
+                properties.getHeaderName(),
+                headerValueProvider
+        );
 
         try {
             filterChain.doFilter(request, wrappedResponse);
@@ -39,12 +47,14 @@ public class RequestTimerFilter extends OncePerRequestFilter {
     private static class TimerResponseWrapper extends HttpServletResponseWrapper {
         private final long startTime;
         private final String headerName;
+        private final HeaderValueProvider headerValueProvider;
         private boolean headerAdded = false;
 
-        public TimerResponseWrapper(HttpServletResponse response, long startTime, String headerName) {
+        public TimerResponseWrapper(HttpServletResponse response, long startTime, String headerName, HeaderValueProvider headerValueProvider) {
             super(response);
             this.startTime = startTime;
             this.headerName = headerName;
+            this.headerValueProvider = headerValueProvider;
         }
 
         @Override
@@ -85,8 +95,7 @@ public class RequestTimerFilter extends OncePerRequestFilter {
 
         public void addTimerHeader() {
             if (!headerAdded && !isCommitted()) {
-                var elapsedTime = System.currentTimeMillis() - startTime;
-                super.addHeader(headerName, String.valueOf(elapsedTime));
+                super.addHeader(headerName, this.headerValueProvider.getHeaderValue(startTime));
                 headerAdded = true;
             }
         }

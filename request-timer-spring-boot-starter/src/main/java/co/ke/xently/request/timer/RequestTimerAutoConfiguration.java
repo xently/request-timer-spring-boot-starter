@@ -1,5 +1,7 @@
 package co.ke.xently.request.timer;
 
+import co.ke.xently.request.timer.utils.DefaultHeaderValueProvider;
+import co.ke.xently.request.timer.utils.HeaderValueProvider;
 import co.ke.xently.request.timer.webflux.RequestTimerWebFilter;
 import co.ke.xently.request.timer.webmvc.RequestTimerFilter;
 import jakarta.servlet.Filter;
@@ -17,6 +19,11 @@ import org.springframework.web.server.WebFilter;
 @ConditionalOnWebApplication
 @EnableConfigurationProperties(RequestTimerProperties.class)
 public class RequestTimerAutoConfiguration {
+    @Bean
+    @ConditionalOnMissingBean
+    public HeaderValueProvider headerValueProvider(RequestTimerProperties properties) {
+        return new DefaultHeaderValueProvider(properties.getDateFormat());
+    }
 
     @Configuration(proxyBeanMethods = false)
     @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
@@ -24,9 +31,12 @@ public class RequestTimerAutoConfiguration {
     static class ServletRequestTimerConfiguration {
         @Bean
         @ConditionalOnMissingBean
-        public FilterRegistrationBean<RequestTimerFilter> requestTimerFilter(RequestTimerProperties properties) {
+        public FilterRegistrationBean<RequestTimerFilter> requestTimerFilter(
+                RequestTimerProperties properties,
+                HeaderValueProvider headerValueProvider
+        ) {
             var registrationBean = new FilterRegistrationBean<RequestTimerFilter>();
-            registrationBean.setFilter(new RequestTimerFilter(properties));
+            registrationBean.setFilter(new RequestTimerFilter(properties, headerValueProvider));
             registrationBean.setOrder(properties.getOrder());
             return registrationBean;
         }
@@ -38,8 +48,11 @@ public class RequestTimerAutoConfiguration {
     static class ReactiveRequestTimerConfiguration {
         @Bean
         @ConditionalOnMissingBean
-        public RequestTimerWebFilter requestTimerWebFilter(RequestTimerProperties properties) {
-            return new RequestTimerWebFilter(properties);
+        public RequestTimerWebFilter requestTimerWebFilter(
+                RequestTimerProperties properties,
+                HeaderValueProvider headerValueProvider
+        ) {
+            return new RequestTimerWebFilter(properties, headerValueProvider);
         }
     }
 }

@@ -1,6 +1,7 @@
 package co.ke.xently.request.timer.webmvc;
 
 import co.ke.xently.request.timer.RequestTimerProperties;
+import co.ke.xently.request.timer.utils.DefaultHeaderValueProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,7 +25,7 @@ class RequestTimerFilterTest {
     @BeforeEach
     void setUp() {
         properties = new RequestTimerProperties();
-        filter = new RequestTimerFilter(properties);
+        filter = new RequestTimerFilter(properties, new DefaultHeaderValueProvider());
     }
 
     @Test

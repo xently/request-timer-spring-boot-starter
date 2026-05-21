@@ -1,6 +1,7 @@
 package co.ke.xently.request.timer.webflux;
 
 import co.ke.xently.request.timer.RequestTimerProperties;
+import co.ke.xently.request.timer.utils.DefaultHeaderValueProvider;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.Ordered;
 import org.springframework.mock.http.server.reactive.MockServerHttpRequest;
@@ -19,7 +20,7 @@ class RequestTimerWebFilterTest {
     @Test
     void shouldAddHeaderOnCommit() {
         var properties = new RequestTimerProperties();
-        var filter = new RequestTimerWebFilter(properties);
+        var filter = new RequestTimerWebFilter(properties, new DefaultHeaderValueProvider());
         var exchange = MockServerWebExchange.from(MockServerHttpRequest.get("/test").build());
         var chain = mock(WebFilterChain.class);
         when(chain.filter(any())).thenReturn(Mono.empty());
@@ -36,7 +37,7 @@ class RequestTimerWebFilterTest {
     @Test
     void shouldReturnCorrectOrder() {
         var properties = new RequestTimerProperties();
-        var filter = new RequestTimerWebFilter(properties);
+        var filter = new RequestTimerWebFilter(properties, new DefaultHeaderValueProvider());
         assertThat(filter.getOrder()).isEqualTo(Ordered.HIGHEST_PRECEDENCE);
     }
 }
