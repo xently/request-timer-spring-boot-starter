@@ -19,6 +19,7 @@ spring:
     init:
       schema-locations:
         - classpath:schema.sql
+      data-locations:
         - classpath:data.sql
 request-timer:
   header-name: X-Elapsed-Time
