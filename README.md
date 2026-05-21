@@ -58,4 +58,24 @@ request-timer:
   header-name: X-ElapsedTime
   # Order of the filter/WebFilter. Default is Ordered.HIGHEST_PRECEDENCE.
   order: -2147483648
+  # The date pattern for the elapsed time value. Default is yyyyMMddHHmmssSSS.
+  default-header-date-pattern: yyyyMMddHHmmssSSS
+```
+
+## Customization
+
+You can provide your own `HeaderValueProvider` bean to customize how the elapsed time value is generated (e.g. to return duration in milliseconds):
+
+```java
+import co.ke.xently.request.timer.utils.HeaderValueProvider;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class MyConfig {
+    @Bean
+    public HeaderValueProvider customHeaderValueProvider() {
+        return startTime -> String.valueOf(System.currentTimeMillis() - startTime) + "ms";
+    }
+}
 ```
